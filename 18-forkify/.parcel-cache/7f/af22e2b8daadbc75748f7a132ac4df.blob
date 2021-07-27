@@ -1,0 +1,14 @@
+import   "a641aeec1aa34f5f8b72e5f7d92da188:./View.js";
+import   "a641aeec1aa34f5f8b72e5f7d92da188:./previewView.js";
+import   "a641aeec1aa34f5f8b72e5f7d92da188:url:../../img/icons.svg";
+class $a641aeec1aa34f5f8b72e5f7d92da188$var$ResultsView extends $a641aeec1aa34f5f8b72e5f7d92da188$import$bc564d5e62d693bc$9099ad97b570f7c {
+    _parentElement = document.querySelector('.results');
+    _errorMessage = `No recipes found for your query. Please try again.`;
+    _message = '';
+    _generateMarkup() {
+        console.log(this._data);
+        return this._data.map((results)=>$a641aeec1aa34f5f8b72e5f7d92da188$import$d6293f58f2b34dc$9099ad97b570f7c.render(results, false)
+        ).join('');
+    }
+}
+var $a641aeec1aa34f5f8b72e5f7d92da188$export$9099ad97b570f7c = new $a641aeec1aa34f5f8b72e5f7d92da188$var$ResultsView();

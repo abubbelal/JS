@@ -1,0 +1,51 @@
+var _shoppingCartJs = require('./shoppingCart.js');
+var _lodashEs = require('lodash-es');
+// we can also import everything like a namespace
+// console.log('Importing module');
+// ShoppingCart.addToCart('milk', 23);
+// console.log(ShoppingCart.qt);
+// import add from './shoppingCart.js'; //we can provide a name to the default export
+// add('pizza', 45);
+console.log(_shoppingCartJs.cart);
+_shoppingCartJs.addToCart('Bread', 5);
+_shoppingCartJs.addToCart('Apples', 15);
+_shoppingCartJs.addToCart('Chicken', 5);
+console.log(_shoppingCartJs.cart);
+// import { cloneDeep } from 'lodash';
+const state = {
+  cart: [{
+    product: 'bread',
+    quantity: 5
+  }, {
+    product: 'pizza',
+    quantity: 5
+  }],
+  user: {
+    loggedIn: true
+  }
+};
+const stateClone = Object.assign({}, state);
+const stateDeepClone = _lodashEs.cloneDeep(state);
+state.user.loggedIn = false;
+console.log(stateClone);
+console.log(stateDeepClone);
+/**
+* Using Parcel
+*
+* npm install parcel --save-dev
+*  now to use parcel it will have to be done in the terminal.
+* We have to use npx
+* npx parcel [entry point]
+* npx parcel index.html <-- the file we want to bundle up......
+*/
+/**
+* this code is for parcel to understand.
+* It will essetnially lets us inject any new code to our file
+* without reloading the web page and basically maintaining whatever
+* state we had in the webpage
+*
+* NOTE it will not make it to the final build
+*/
+if (module.hot) {
+  module.hot.accept();
+}

@@ -1,0 +1,27 @@
+
+Planning
+
+    1. User Stories
+            a description of the application's functionality from the user's perspective.
+
+        --- As a [type of user], I want [an action] so that [a benefit]
+                    who                    What                why
+    2. Features
+
+        Map -- allowing user to add new location
+        Geolocation to display map at current location 
+        Form to input distance, time, pace, steps/time 
+        Display all workouts in a list 
+        Display all workouts on the map 
+        Store workout data in the browser using local storage API on page load, read 
+        the saved data from local stoarge and display 
+
+    3. Flowchart
+            What we build
+
+    4. Architecture
+            How we organize our code.
+
+Development
+        Implementation of the our plan using code 
+

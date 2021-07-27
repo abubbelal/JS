@@ -1,0 +1,113 @@
+import   "d13712820ca5e1f6986cbe8ea4cce0db:./model.js";
+import   "d13712820ca5e1f6986cbe8ea4cce0db:./views/recipeView.js";
+import   "d13712820ca5e1f6986cbe8ea4cce0db:./views/searchView.js";
+import   "d13712820ca5e1f6986cbe8ea4cce0db:./views/resultsView.js";
+import   "d13712820ca5e1f6986cbe8ea4cce0db:./views/bookmarksView.js";
+import   "d13712820ca5e1f6986cbe8ea4cce0db:./views/paginationView.js";
+import   "d13712820ca5e1f6986cbe8ea4cce0db:./views/addRecipeView.js";
+import   "d13712820ca5e1f6986cbe8ea4cce0db:./config.js";
+import   "d13712820ca5e1f6986cbe8ea4cce0db:regenerator-runtime/runtime";
+import   "d13712820ca5e1f6986cbe8ea4cce0db:core-js/stable";
+import   "d13712820ca5e1f6986cbe8ea4cce0db:regenerator-runtime";
+import   "d13712820ca5e1f6986cbe8ea4cce0db:./config.js";
+// if(module.hot) {
+//   module.hot.accept();
+// }
+const $d13712820ca5e1f6986cbe8ea4cce0db$var$controlRecipes = async function() {
+    try {
+        const id = window.location.hash.slice(1);
+        // console.log(id);
+        if (!id) return;
+        $d13712820ca5e1f6986cbe8ea4cce0db$import$db3c59878a2ec187$9099ad97b570f7c.renderSpinner();
+        //0 update results view to mark selected search result
+        $d13712820ca5e1f6986cbe8ea4cce0db$import$a3b1aa600613c84a$9099ad97b570f7c.update($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$b85fdf26818ddd9());
+        //1. loading recipe
+        await $d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$e9bb34c12ee45abf(id); //model returns a promise so we have to await that promise
+        //2. rendering recipe
+        $d13712820ca5e1f6986cbe8ea4cce0db$import$db3c59878a2ec187$9099ad97b570f7c.render($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.recipe);
+        //3 update bookmark view
+        $d13712820ca5e1f6986cbe8ea4cce0db$import$9fb430619d29de1e$9099ad97b570f7c.update($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.bookmarks);
+    } catch (e) {
+        $d13712820ca5e1f6986cbe8ea4cce0db$import$db3c59878a2ec187$9099ad97b570f7c.renderError();
+        console.error(e);
+    }
+};
+const $d13712820ca5e1f6986cbe8ea4cce0db$var$controlSearchResults = async function() {
+    try {
+        //1) get search query
+        const query = $d13712820ca5e1f6986cbe8ea4cce0db$import$a55578fd3c642271$9099ad97b570f7c.getQuery();
+        if (!query) return;
+        //2) load search
+        await $d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$3ebf3dcac05c94a4(query);
+        //3) render results
+        // console.log(model.state.search.results);
+        // resultsView.render(model.state.search.results);
+        $d13712820ca5e1f6986cbe8ea4cce0db$import$a3b1aa600613c84a$9099ad97b570f7c.render($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$b85fdf26818ddd9());
+        // 4) Render initial pagination
+        $d13712820ca5e1f6986cbe8ea4cce0db$import$1060d8bab8d0ca7e$9099ad97b570f7c.render($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.search);
+    } catch (e) {
+        console.log(e);
+    }
+};
+const $d13712820ca5e1f6986cbe8ea4cce0db$var$controlPagination = function(goToPage) {
+    //render new results
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$a3b1aa600613c84a$9099ad97b570f7c.render($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$b85fdf26818ddd9(goToPage));
+    //render new pagination buttons
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$1060d8bab8d0ca7e$9099ad97b570f7c.render($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.search);
+};
+const $d13712820ca5e1f6986cbe8ea4cce0db$var$controlServings = function(newServings) {
+    //update the recipe servings (in state)
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$d0c24e46f61d4295(newServings);
+    //update the recipe view
+    // recipeView.render(model.state.recipe);
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$db3c59878a2ec187$9099ad97b570f7c.update($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.recipe);
+};
+const $d13712820ca5e1f6986cbe8ea4cce0db$var$controlAddBookmark = function() {
+    //add/remove bookmark
+    if (!$d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.recipe.bookmarked) $d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$5ceec956fc53d8ba($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.recipe);
+    else $d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$5ceec956fc53d8ba($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.recipe);
+    //update recipe view
+    // console.log(model.state.recipe);
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$db3c59878a2ec187$9099ad97b570f7c.update($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.recipe);
+    //render bookmarks
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$9fb430619d29de1e$9099ad97b570f7c.render($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.bookmarks);
+};
+const $d13712820ca5e1f6986cbe8ea4cce0db$var$controlAddRecipe = async function(newRecipe) {
+    try {
+        console.log(newRecipe);
+        //show loading spinner
+        $d13712820ca5e1f6986cbe8ea4cce0db$import$14bdd31a0c5d8ad1$9099ad97b570f7c.renderSpinner();
+        //upload the new recipe data
+        await $d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$56a8c91f2354a446(newRecipe);
+        console.log($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.recipe);
+        //render recipe
+        $d13712820ca5e1f6986cbe8ea4cce0db$import$db3c59878a2ec187$9099ad97b570f7c.render($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.recipe);
+        //success message
+        $d13712820ca5e1f6986cbe8ea4cce0db$import$14bdd31a0c5d8ad1$9099ad97b570f7c.renderMessage();
+        //render bookmark view
+        $d13712820ca5e1f6986cbe8ea4cce0db$import$9fb430619d29de1e$9099ad97b570f7c.render($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.bookmarks);
+        //change id in url
+        window.history.pushState(null, '', `#${$d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.recipe.id}`);
+        //close form window
+        setTimeout(function() {
+            $d13712820ca5e1f6986cbe8ea4cce0db$import$14bdd31a0c5d8ad1$9099ad97b570f7c.toggleWindow();
+        }, $d13712820ca5e1f6986cbe8ea4cce0db$import$7d33118c35f7af8f$ffdbc260c45363d * 1000);
+    } catch (e) {
+        console.error('------------------ERROR', e);
+        $d13712820ca5e1f6986cbe8ea4cce0db$import$14bdd31a0c5d8ad1$9099ad97b570f7c.renderError(e.message);
+    }
+};
+const $d13712820ca5e1f6986cbe8ea4cce0db$var$controlBookmarks = function() {
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$9fb430619d29de1e$9099ad97b570f7c.render($d13712820ca5e1f6986cbe8ea4cce0db$import$729f94da8f1824ff$c837a8b98c265ae3.bookmarks);
+};
+const $d13712820ca5e1f6986cbe8ea4cce0db$var$init = function() {
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$9fb430619d29de1e$9099ad97b570f7c.addHandlerRender($d13712820ca5e1f6986cbe8ea4cce0db$var$controlBookmarks);
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$db3c59878a2ec187$9099ad97b570f7c.addHandlerRender($d13712820ca5e1f6986cbe8ea4cce0db$var$controlRecipes);
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$db3c59878a2ec187$9099ad97b570f7c.addHandlerUpdateServings($d13712820ca5e1f6986cbe8ea4cce0db$var$controlServings);
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$db3c59878a2ec187$9099ad97b570f7c.addHandlerAddBookmark(addHandlerAddBookmark);
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$a55578fd3c642271$9099ad97b570f7c.addHandlerSearch($d13712820ca5e1f6986cbe8ea4cce0db$var$controlSearchResults);
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$1060d8bab8d0ca7e$9099ad97b570f7c.addHandlerClick($d13712820ca5e1f6986cbe8ea4cce0db$var$controlPagination);
+    $d13712820ca5e1f6986cbe8ea4cce0db$import$14bdd31a0c5d8ad1$9099ad97b570f7c._addHandlerUpload($d13712820ca5e1f6986cbe8ea4cce0db$var$controlAddRecipe);
+// controlServings();
+};
+$d13712820ca5e1f6986cbe8ea4cce0db$var$init();

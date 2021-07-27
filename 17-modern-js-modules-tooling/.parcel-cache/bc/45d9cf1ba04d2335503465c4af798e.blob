@@ -1,0 +1,42 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "cart", function () {
+  return cart;
+});
+_parcelHelpers.export(exports, "addToCart", function () {
+  return addToCart;
+});
+_parcelHelpers.export(exports, "totalPrice", function () {
+  return totalPrice;
+});
+_parcelHelpers.export(exports, "qt", function () {
+  return totalQuantity;
+});
+// Exporting module
+console.log('Exporting module');
+/**
+* Variables declared inside a module are scoped to this module; essentially making them
+* private to the module.
+*/
+const shippingCost = 10;
+const cart = [];
+const addToCart = function (product, quantity) {
+  cart.push({
+    product,
+    quantity
+  });
+  console.log(`${quantity} ${product} added to cart`);
+};
+/**
+* NOTE:: Exporting must happen in top level code, not inside inner scopes.
+* For example inside an if statement.
+*/
+const totalPrice = 245;
+const totalQuantity = 23;
+exports.default = function (product, quantity) {
+  cart.push({
+    product,
+    quantity
+  });
+  console.log(`${quantity} ${product} added to cart`);
+};
